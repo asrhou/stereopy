@@ -517,7 +517,8 @@ class StPipeline(object):
         neighbor, connectivities, _ = self.get_neighbors_res(neighbors_res_key)
         clusters = le(neighbor=neighbor, adjacency=connectivities, directed=directed, resolution=resolution,
                       use_weights=use_weights, random_state=random_state, n_iterations=n_iterations)
-        df = pd.DataFrame({'bins': self.data.cell_names, 'group': clusters})
+        df = pd.DataFrame({'bins': self.data.cell_names, 'group': clusters}) 
+        df['group'] = df[['group']].apply(lambda col:pd.Categorical(col).codes) + 1
         self.result[res_key] = df
         key = 'cluster'
         self.reset_key_record(key, res_key)
@@ -553,6 +554,7 @@ class StPipeline(object):
         clusters = lo(neighbor=neighbor, resolution=resolution, random_state=random_state,
                       adjacency=connectivities, flavor=flavor, directed=directed, use_weights=use_weights)
         df = pd.DataFrame({'bins': self.data.cell_names, 'group': clusters})
+        df['group'] = df[['group']].apply(lambda col:pd.Categorical(col).codes) + 1
         self.result[res_key] = df
         key = 'cluster'
         self.reset_key_record(key, res_key)
@@ -572,6 +574,7 @@ class StPipeline(object):
         communities, _, _ = phe.cluster(self.result[pca_res_key], k=phenograph_k, clustering_algo='leiden')
         clusters = communities.astype(str)
         df = pd.DataFrame({'bins': self.data.cell_names, 'group': clusters})
+        df['group'] = df[['group']].apply(lambda col:pd.Categorical(col).codes) + 1
         self.result[res_key] = df
         key = 'cluster'
         self.reset_key_record(key,res_key)
