@@ -255,8 +255,8 @@ def stereo_to_anndata(data: StereoExpData, flavor='scanpy', sample_id="sample", 
         adata.obsm['spatial'] = data.position
         #adata.obsm['X_spatial'] = data.position
         logger.info(f"Adding data.position as adata.obs['x'] and adata.obs['y'] .")
-        adata.obs['x'] = pd.DataFrame(data.position[:, 0], index=data.cell_names.astype('str'))
-        adata.obs['y'] = pd.DataFrame(data.position[:, 1], index=data.cell_names.astype('str'))
+        adata.obs['x'] = data.position[:, 0]
+        adata.obs['y'] = data.position[:, 1]
 
     for key in data.tl.key_record.keys():
         if len(data.tl.key_record[key]) > 0:
