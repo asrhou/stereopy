@@ -130,6 +130,8 @@ def multi_scatter(
         palette: Optional[Union[np.ndarray, list, str]] = 'stereo',
         vmin=None,
         vmax=None,
+        figwidth: int = 8,
+        figheight: int = 10,
 ):
     """
     plot multiple scatters
@@ -147,6 +149,8 @@ def multi_scatter(
     :param palette: customized colors
     :param vmin:
     :param vmax:
+    :param figwidth: width of the plot
+    :param figheight: height of the plot
 
     :return: matplotlib Axes object
 
@@ -154,7 +158,7 @@ def multi_scatter(
     ncols = min(ncols, len(hue))
     nrows = np.ceil(len(hue) / ncols).astype(int)
     # each panel will have the size of rcParams['figure.figsize']
-    fig = plt.figure(figsize=(ncols * 10, nrows * 8))
+    fig = plt.figure(figsize=(ncols * figwidth, nrows * figheight))
     left = 0.2 / ncols
     bottom = 0.13 / nrows
     axs = gridspec.GridSpec(
