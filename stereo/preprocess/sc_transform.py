@@ -19,7 +19,7 @@ def sc_transform(
         filter_hvgs=True,
         res_clip_range="seurat",
         var_features_n=3000,
-        threads=4
+        threads=1
 ):
     """
     python version sc transform
@@ -41,7 +41,7 @@ def sc_transform(
     :return: stereoExpData object
     """
     if not issparse(data.exp_matrix):
-        data.exp_matrix = csr_matrix(data.exp_matrix)
+        data.exp_matrix = csr_matrix(data.exp_matrix, dtype=np.float32)
     exclude_poisson = False
     vst_out = vst(
         data.exp_matrix.T,
