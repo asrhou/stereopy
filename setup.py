@@ -15,7 +15,7 @@ if sys.version_info < (3, 7):
 
 setup(
     name='stereopy',
-    version='0.2.4',
+    version='0.3.0',
     setup_requires=['setuptools_scm', 'numpy', 'panel', 'pytest', 'quilt3', 'scipy', 'phenograph'],
     description='Spatial transcriptomic analysis in python.',
     long_description=Path('README.md').read_text('utf-8'),
@@ -45,12 +45,3 @@ setup(
         'Topic :: Scientific/Engineering :: Visualization',
     ],
 )
-
-try:
-    import os
-    print('install hotspot from git, command: pip install git+https://github.com/yoseflab/Hotspot.git')
-    os.system('pip install git+https://github.com/yoseflab/Hotspot.git')
-    # os.system('pip install pyscenic~=0.11.2 --ignore-installed pyarrow')
-except Exception as e:
-    print('Hotspot is not install successly, please check.')
-    print(e)

@@ -1,51 +1,71 @@
 Installation
 ============
+.. note::
+    Our tool could be installed on Linux with python3.7 or python3.8.
 
-Pre-built installation (recommended)
+PyPI
 ------------------------------------
+
+**Step1**:
+
+Prepare an isolated conda environment
+
+.. code:: bash
+
+    conda create --name st python=3.8
+    conda activate st
+
+**Step2**:
+
+Install Stereopy using *pip*
 
 .. code:: bash
 
     pip install stereopy
 
-Source installation
---------------------------------------------
+Anaconda
+------------------------------------
 
-To install stereopy from source, you need:
+Not yet.
 
-- HDF5 1.8.4 or newer with development headers
-- A C compiler
+Development Version
+------------------------------------
+**Step1**:
 
-On Unix platforms, you also need pkg-config unless you explicitly specify a path for HDF5 as described below.
-
-You can specify build options for stereopy as environment variables when you build it from source:
+Prepare an isolated conda environment
 
 .. code:: bash
 
-    git clone https://github.com/BGIResearch/stereopy.git
+    conda create --name st python=3.8
+    conda activate st
+
+**Step2**:
+
+If you want to use the latest version of dev branch on GitHub, you need to clone the repository and enter the directory.
+
+.. code:: bash
+
+    git clone -b dev https://github.com/BGIResearch/stereopy.git
+
     cd stereopy
-    HDF5_DIR=/path/to/hdf5 python setup.py install
 
-The supported build options are:
+    python setup.py install
 
- - To specify where to find HDF5, use one of these options:
-    - HDF5_LIBDIR and HDF5_INCLUDEDIR: the directory containing the compiled HDF5 libraries and the directory containing the C header files, respectively.
-    - HDF5_DIR: a shortcut for common installations, a directory with lib and include subdirectories containing compiled libraries and C headers.
-    - HDF5_PKGCONFIG_NAME: A name to query pkg-config for. If none of these options are specified, stereopy will query pkg-config by default for hdf5, or hdf5-openmpi if building with MPI support.
+Popular bugs
+------------------------------------
 
-Source installation on OSX/MacOS
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Installation failed due to some factors:
 
-HDF5 and Python are most likely in your package manager (e.g. Homebrew, Macports, or Fink). Be sure to install the development headers, as sometimes they are not included in the main package.
+**Version of Python**
 
-XCode comes with a C compiler (clang), and your package manager will likely have other C compilers for you to install.
+    make sure you are using python3.7 or python3.8
 
-Source installation on Linux/Other Unix
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+**Conficts of dependencies**
 
-HDF5 and Python are most likely in your package manager. A C compiler almost definitely is, usually there is some kind of metapackage to install the default build tools, e.g. build-essential, which should be sufficient for our needs. Make sure that that you have the development headers, as they are usually not installed by default. They can usually be found in python-dev or similar and libhdf5-dev or similar.
+    find out packages which lead to failures
 
-Source installation on Windows
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    create a new requirements.txt and run:
 
-Installing from source on Windows is a much more difficult prospect than installing from source on other OSs, as not only are you likely to need to compile HDF5 from source, everything must be built with the correct version of Visual Studio. Additional patches are also needed to HDF5 to get HDF5 and Python to work together.
+.. code:: bash
+
+    pip install -r requirements.txt

@@ -34,7 +34,12 @@ class StereoExpData(Data):
             cells: Optional[Union[np.ndarray, Cell]] = None,
             position: Optional[np.ndarray] = None,
             output: Optional[str] = None,
-            partitions: int = 1):
+            partitions: int = 1,
+            offset_x: Optional[str] = None,
+            offset_y: Optional[str] = None,
+            attr: Optional[dict] = None,
+    ):
+
         """
         a Data designed for express matrix of spatial omics. It can directly set the corresponding properties
         information to initialize the data. If the file path is not None, we will read the file information to
@@ -50,6 +55,9 @@ class StereoExpData(Data):
         :param position: the spatial location.
         :param output: the path of output.
         :param partitions: the number of multi-process cores, used when processing files in parallel.
+        :param offset_x: the x of the offset.
+        :param offset_y: the y of the offset.
+        :param attr: attributions from gef file.
         """
         super(StereoExpData, self).__init__(file_path=file_path, file_format=file_format,
                                             partitions=partitions, output=output)
@@ -62,6 +70,9 @@ class StereoExpData(Data):
         self.tl = StPipeline(self)
         self.plt = self.get_plot()
         self.raw = None
+        self._offset_x = offset_x
+        self._offset_y = offset_y
+        self._attr = attr
 
     def get_plot(self):
         from ..plots.plot_collection import PlotCollection
@@ -235,6 +246,60 @@ class StereoExpData(Data):
         :return:
         """
         self._position = pos
+
+    @property
+    def offset_x(self):
+        """
+        get the x of self._offset_x.
+
+        :return:
+        """
+        return self._offset_x
+
+    @offset_x.setter
+    def offset_x(self, min_x):
+        """
+
+        :param min_x: offset of x.
+        :return:
+        """
+        self._offset_x = min_x
+
+    @property
+    def offset_y(self):
+        """
+        get the offset_y of self._offset_y.
+
+        :return:
+        """
+        return self._offset_y
+
+    @offset_y.setter
+    def offset_y(self, min_y):
+        """
+
+        :param min_y: offset of y.
+        :return:
+        """
+        self._offset_y = min_y
+
+    @property
+    def attr(self):
+        """
+        get the attr of self._attr.
+
+        :return:
+        """
+        return self._attr
+
+    @attr.setter
+    def attr(self, attr):
+        """
+
+        :param attr: dict of attr.
+        :return:
+        """
+        self._attr = attr
 
     def to_df(self):
         df = pd.DataFrame(
